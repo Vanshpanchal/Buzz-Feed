@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/outline_person_2_24"
+            android:title="@string/profile" />
+        <item
+            android:id="@+id/nav_Tblue"
+            android:icon="@drawable/baseline_star_border_24"
+            android:title="@string/twitter_blue" />
+        <item
+            android:id="@+id/nav_topics"
+            android:icon="@drawable/outline_article_24"
+            android:title="@string/topics" />
+        <item
+            android:id="@+id/nav_bookmarks"
+            android:icon="@drawable/outline_bookmark_border_24"
+            android:title="@string/bookmarks" />
+        <item
+            android:id="@+id/nav_list"
+            android:icon="@drawable/outline_list_alt_24"
+            android:title="@string/lists" />
+
+        <item
+            android:id="@+id/nav_Tcircle"
+            android:icon="@drawable/outline_supervised_user_circle_24"
+            android:title="@string/twitter_circle" />
+    </group>
+    <group
+        android:id="@+id/group2"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/subtitle"
+            android:title="">
+            <menu>
+                <item
+                    android:id="@+id/proftools"
+                    android:icon="@drawable/outline_build_24"
+                    android:title="@string/professional_tools" />
+
+                <item
+                    android:id="@+id/setting"
+                    android:icon="@drawable/outline_settings_24"
+                    android:title="@string/setting_support" />
+
+            </menu>
+        </item>
+    </group>
+</menu>
