@@ -3,10 +3,10 @@ package com.example.app
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
@@ -15,10 +15,31 @@ import kotlin.random.Random
 
 class Myadapter(var context: Fragment, private val user: List<UserX>, val nignt: String) :
     RecyclerView.Adapter<Myadapter.MyViewholder>() {
+
+    lateinit var mListener: onItemClickListener
+    lateinit var mLike: onLikeListener
+
+    interface onItemClickListener {
+        fun onItemClick(position: Int, msg: String, author: String, share: TextView)
+
+    }
+
+    interface onLikeListener {
+        fun onLikeClick(position: Int, view: ImageButton, like: TextView)
+    }
+
+    fun setOnItemClickListener(listener: onItemClickListener) {
+        mListener = listener
+    }
+
+    fun onLikeClickListener(listenerq: onLikeListener) {
+        mLike = listenerq
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Myadapter.MyViewholder {
         val itemview = LayoutInflater.from(parent.context).inflate(R.layout.item, parent, false)
         val o = nignt.toString()
-        return MyViewholder(itemview, o)
+        return MyViewholder(itemview, mListener!!, o, mLike)
     }
 
     override fun onBindViewHolder(holder: MyViewholder, position: Int) {
@@ -30,7 +51,7 @@ class Myadapter(var context: Fragment, private val user: List<UserX>, val nignt:
         val sharecount = Random.nextInt(1, 101)
         val commentcount = Random.nextInt(1, 101)
         repeat(30) {
-            val tweet = generateRandomTweet()
+            val tweet = generateRandomTweet(position)
             arrayList.add(tweet)
         }
 
@@ -42,10 +63,9 @@ class Myadapter(var context: Fragment, private val user: List<UserX>, val nignt:
         holder.share.text = sharecount.toString()
         holder.comment.text = commentcount.toString()
 
-        if (holder.code== "0")
-        {
+        if (holder.code == "0") {
             holder.cardlinear.setBackgroundResource(R.drawable.lighttweet)
-        }else{
+        } else {
             holder.cardlinear.setBackgroundResource(R.drawable.tweet)
         }
 
@@ -56,7 +76,13 @@ class Myadapter(var context: Fragment, private val user: List<UserX>, val nignt:
         return user.size
     }
 
-    class MyViewholder(itemView: View, o: String) : RecyclerView.ViewHolder(itemView) {
+    class MyViewholder(
+        itemView: View,
+        listener: onItemClickListener,
+        o: String,
+        likeListener: onLikeListener
+    ) :
+        RecyclerView.ViewHolder(itemView) {
         val card: CardView = itemView.findViewById(R.id.itemcard)
         val username: TextView = itemView.findViewById(R.id.uname)
         val email: TextView = itemView.findViewById(R.id.email)
@@ -64,14 +90,35 @@ class Myadapter(var context: Fragment, private val user: List<UserX>, val nignt:
         val profile: ImageView = itemView.findViewById(R.id.profile_image)
         val like: TextView = itemView.findViewById(R.id.like)
         val comment: TextView = itemView.findViewById(R.id.comment)
+        val sharebtn: LinearLayout = itemView.findViewById(R.id.sharebtn)
         val share: TextView = itemView.findViewById(R.id.share)
+        val likebtn: LinearLayout = itemView.findViewById(R.id.likebtn)
         val cardlinear: LinearLayout = itemView.findViewById(R.id.cardLinear)
+        val ib_like: ImageButton = itemView.findViewById(R.id.ib_like)
         val code = o
 
+        init {
+            sharebtn.setOnClickListener {
+                listener.onItemClick(
+                    adapterPosition,
+                    tweet.text.toString(),
+                    username.text.toString(),
+                    share
+                )
+            }
+
+            likebtn.setOnClickListener {
+                likeListener.onLikeClick(adapterPosition, ib_like, like)
+
+            }
+
+
+        }
     }
 
 
-    private fun generateRandomTweet(): String {
+    private fun generateRandomTweet(position: Int): String {
+
         val tweets = listOf(
             "I'm having a great day!",
             "Just finished reading a fantastic book.",
@@ -88,5 +135,6 @@ class Myadapter(var context: Fragment, private val user: List<UserX>, val nignt:
 
         val randomIndex = Random.nextInt(tweets.size)
         return tweets[randomIndex]
+
     }
 }

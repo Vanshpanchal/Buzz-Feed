@@ -49,7 +49,6 @@
                     android:id="@+id/setting"
                     android:icon="@drawable/outline_settings_24"
                     android:title="@string/setting_support" />
-
             </menu>
         </item>
     </group>

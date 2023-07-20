@@ -47,7 +47,6 @@ class MainActivity : AppCompatActivity() {
             if (nightMode == Configuration.UI_MODE_NIGHT_NO) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                 mode_code = 0
-
             } else {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                 mode_code = 1

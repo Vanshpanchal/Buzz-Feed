@@ -1,13 +1,14 @@
 package com.example.app.ui.home
 
+import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import androidx.appcompat.app.AppCompatDelegate
+import android.widget.ImageButton
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -45,11 +46,6 @@ class HomeFragment : Fragment() {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
-//        val textView: TextView = binding.textHome
-//        homeViewModel.text.observe(viewLifecycleOwner) {
-//            textView.text = it
-//        }
         return root
     }
 
@@ -80,6 +76,9 @@ class HomeFragment : Fragment() {
                     val layoutManager = LinearLayoutManager(context)
                     recycler.layoutManager = layoutManager
 
+                    shareManipulation()
+                    likeManipulation()
+
 
                 }
 
@@ -108,7 +107,8 @@ class HomeFragment : Fragment() {
                     val layoutManager = LinearLayoutManager(context)
                     recycler.layoutManager = layoutManager
 
-
+                    likeManipulation()
+                    shareManipulation()
                 }
 
                 override fun onFailure(call: Call<User>, t: Throwable) {
@@ -127,4 +127,47 @@ class HomeFragment : Fragment() {
     }
 
 
+    fun shareManipulation() {
+        adapter.setOnItemClickListener(object : Myadapter.onItemClickListener {
+            override fun onItemClick(position: Int, msg: String, author: String, share: TextView) {
+//                            Toast.makeText(HomeFragment, "one", Toast.LENGTH_SHORT).show()
+                Log.d("one", "onItemClick: $msg")
+                val message: String = "$author \n$msg"
+                val shareIntent = Intent()
+                shareIntent.action = Intent.ACTION_SEND
+                shareIntent.putExtra(Intent.EXTRA_TEXT, message)
+                shareIntent.type = "text/plain"
+
+                val intent = Intent.createChooser(shareIntent, null)
+
+
+                startActivity(intent)
+                var shareCount = share.text.toString().toInt() + 1
+                share.text = shareCount.toString()
+            }
+
+
+        })
+    }
+
+    fun likeManipulation() {
+        adapter.onLikeClickListener(object : Myadapter.onLikeListener {
+
+            override fun onLikeClick(position: Int, view: ImageButton, like: TextView) {
+                Log.d("qwerty", "onLikeClick: ")
+                val id = view.tag
+                if (id == "unfill") {
+                    view.setImageResource(R.drawable.heart_fill)
+                    view.tag = "fill"
+                    val likeCount = like.text.toString().toInt() + 1
+                    like.text = likeCount.toString()
+                } else {
+                    view.setImageResource(R.drawable.heart)
+                    view.tag = "unfill"
+                    val likeCount = like.text.toString().toInt() - 1
+                    like.text = likeCount.toString()
+                }
+            }
+        })
+    }
 }
