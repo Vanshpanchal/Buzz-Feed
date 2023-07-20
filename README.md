@@ -1,6 +1,6 @@
 # Buzz-Feed 
 
-
+[BuzzFeed Apk File](BuzzFeed.apk)
 
 ## Description
 The app features both Dark Mode and Light Mode themes to provide a personalized user experience. It utilizes the DummyJSON API to generate dummy User data, and Retrofit is used to fetch and display the tweets. Additionally, the app supports the functionalities of like and sharing tweets, enhancing user engagement and interactivity.
@@ -31,12 +31,6 @@ The app features both Dark Mode and Light Mode themes to provide a personalized 
 
 4. Run the app on an emulator or a physical Android device.
 
-## Screenshots
-
-![Screenshot 1](screenshots/screenshot1.png)
-![Screenshot 2](screenshots/screenshot2.png)
-![Screenshot 3](screenshots/screenshot3.png)
-
 ## Usage
 
 1. Upon launching the app, the user will be presented with the tweet feed, displaying dummy tweets.
@@ -46,3 +40,7 @@ The app features both Dark Mode and Light Mode themes to provide a personalized 
 3. Tap the heart icon to like a tweet, and the like count will update accordingly.
 
 4. Use the share button to share a tweet with other apps.
+
+## Screenshots
+
+![previews (1)](https://github.com/Vanshpanchal/Buzz-Feed/assets/83567205/9d7967cd-9a56-4e7e-a103-bf347589fcab)
